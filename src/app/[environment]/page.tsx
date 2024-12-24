@@ -1,21 +1,11 @@
 import { Client, isFullPage } from '@notionhq/client'
 
 import type { Environment, User } from '@/app/page'
+import { UsersTable } from '@/components/users-table'
 import { NOTION_API_KEY, NOTION_DATABASE_ID } from '@/lib/env'
 import { isClicSaludUser } from '@/lib/types'
-import { UsersTable } from '@/components/users-table'
-import Link from 'next/link'
 
-const environemnts = ['demo', 'test', 'dev']
-
-export default async function Environment({
-  params,
-}: {
-  params: { environment: Environment }
-}) {
-  'use cache'
-
-  const { environment } = await params
+async function getUsers(environment: Environment) {
   const notion = new Client({ auth: NOTION_API_KEY })
   const database_id = NOTION_DATABASE_ID
 
@@ -42,20 +32,21 @@ export default async function Environment({
     })
   }
 
+  return users
+}
+
+export default async function Environment({
+  params,
+}: {
+  params: Promise<{ environment: string }>
+}) {
+  const { environment } = await params
+
+  const users = await getUsers(environment as Environment)
+
   return (
     <section>
-      <div>
-        Hola desde <span className='font-bold'>{environment}</span>
-        <div className='flex gap-2'>
-          {environemnts.map(environment => (
-            <Link key={environment} href={`/${environment}`}>
-              {environment}
-            </Link>
-          ))}
-        </div>
-      </div>
-      <code>{JSON.stringify(users)}</code>
-      <UsersTable users={users} environment={environment} />
+      <UsersTable users={users} environment={environment as Environment} />
     </section>
   )
 }
