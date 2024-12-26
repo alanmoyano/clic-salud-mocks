@@ -1,14 +1,12 @@
-import { Client, isFullPage } from '@notionhq/client'
+import { isFullPage } from '@notionhq/client'
 
-import type { Environment, User } from '@/app/page'
-import { UsersTable } from '@/components/users-table'
-import { NOTION_API_KEY, NOTION_DATABASE_ID } from '@/lib/env'
+import type { Environment } from '@/app/page'
+import { columns, type User } from '@/components/columns'
+import { DataTable } from '@/components/users-table'
+import { database_id, notion } from '@/lib/env'
 import { isClicSaludUser } from '@/lib/types'
 
 async function getUsers(environment: Environment) {
-  const notion = new Client({ auth: NOTION_API_KEY })
-  const database_id = NOTION_DATABASE_ID
-
   const { results } = await notion.databases.query({
     database_id,
     filter: {
@@ -29,6 +27,7 @@ async function getUsers(environment: Environment) {
       cuil: result.properties.CUIL.number,
       nombre: result.properties.Nombre.title[0].plain_text,
       roles: result.properties.Roles.multi_select.map(role => role.name),
+      entorno: result.properties.Entorno.select.name,
     })
   }
 
@@ -45,8 +44,8 @@ export default async function Environment({
   const users = await getUsers(environment as Environment)
 
   return (
-    <section>
-      <UsersTable users={users} environment={environment as Environment} />
+    <section className='m-auto grid max-w-screen-xl'>
+      <DataTable columns={columns} data={users} />
     </section>
   )
 }

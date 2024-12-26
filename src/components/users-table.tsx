@@ -1,8 +1,5 @@
 'use client'
 
-import { Environment, User } from '@/app/page'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -12,53 +9,132 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-function parseEnvironment(environment: Environment) {
-  const parsedEnvironment = environment.toLowerCase()
+import { Input } from '@/components/ui/input'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { PosibleRol } from '@/lib/types'
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { useState } from 'react'
 
-  return parsedEnvironment === 'test' ? 'tst' : parsedEnvironment
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
 }
-export function UsersTable({
-  users,
-  environment,
-}: {
-  users: User[]
-  environment: Environment
-}) {
-  function handleLogin(cuil: number) {
-    const baseUrl = `https://rugepresa${parseEnvironment(environment)}.cidsfrcutn.tech/api/rugepresa-api/login-alternativo-mock-cidi/${cuil}`
-    window.open(baseUrl, '_blank')
-  }
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+    },
+  })
+
+  const roles: PosibleRol[] = [
+    'Efector',
+    'Auditor',
+    'Arquitectura',
+    'Coordinador',
+    'Administrador',
+  ]
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>CUIL</TableHead>
-          <TableHead>Nombre</TableHead>
-          <TableHead>Roles</TableHead>
-          <TableHead>Login</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {users.map(user => (
-          <TableRow key={user.cuil}>
-            <TableCell>{user.cuil}</TableCell>
-            <TableCell>{user.nombre}</TableCell>
-            <TableCell>
-              <div className='flex flex-wrap gap-1'>
-                {user.roles.map(role => (
-                  <Badge key={role} variant='secondary'>
-                    {role}
-                  </Badge>
-                ))}
-              </div>
-            </TableCell>
-            <TableCell>
-              <Button onClick={() => handleLogin(user.cuil)}>Login</Button>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div>
+      <div className='flex items-center gap-4 py-4'>
+        <Input
+          placeholder='Filtrar por nombre'
+          value={(table.getColumn('nombre')?.getFilterValue() as string) ?? ''}
+          onChange={event =>
+            table.getColumn('nombre')?.setFilterValue(event.target.value)
+          }
+          className='max-w-sm'
+        />
+        <ToggleGroup type='single'>
+          {roles.map(role => (
+            <ToggleGroupItem
+              key={role}
+              id={role}
+              value={role}
+              variant='outline'
+              onClick={event =>
+                table
+                  .getColumn('roles')
+                  ?.setFilterValue(
+                    event.currentTarget.getAttribute('data-state') === 'off'
+                      ? event.currentTarget.getAttribute('id')
+                      : null
+                  )
+              }
+            >
+              {role}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </div>
+      <div className='rounded-md border'>
+        <Table className='w-full table-fixed'>
+          <TableHeader>
+            {table.getHeaderGroups().map(headerGroup => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map(row => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  Sin resultados.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   )
 }

@@ -1,20 +1,20 @@
-import { ThemeProvider } from '@/components/theme-provider'
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
-import './globals.css'
 import Link from 'next/link'
+import { Geist } from 'next/font/google'
+
+import { ThemeProvider } from '@/components/theme-provider'
+
 import { ModeToggle } from '@/components/ui/mode-toggle'
+
+import './globals.css'
 
 const geistSans = Geist({
   subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
-  title: 'ClicSalud login',
+  title: 'Mocks ClicSalud',
   description: 'Hecho con amor por Alan',
-  robots: {
-    index: false,
-  },
   creator: 'Alan Moyano',
 }
 
@@ -40,7 +40,7 @@ function NavBar() {
     <div className='flex items-center justify-between px-4 py-2 shadow-lg'>
       <nav className='flex gap-4'>
         <Link href='/' className='text-3xl font-bold'>
-          Home
+          Mocks ClicSalud
         </Link>
         <div className='flex items-center justify-center gap-4'>
           <Link href='/demo'>Demo</Link>

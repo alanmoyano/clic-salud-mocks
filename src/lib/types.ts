@@ -9,12 +9,19 @@ type Select = {
   color: string
 }
 
+export type PosibleRol =
+  | 'Efector'
+  | 'Auditor'
+  | 'Arquitectura'
+  | 'Coordinador'
+  | 'Administrador'
+
 type Rol = {
-  name: 'Efector' | 'Auditor' | 'Arquitectura' | 'Coordinador' | 'Administrador'
+  name: PosibleRol
 } & Select
 
 type Entorno = {
-  name: 'DEV' | 'TEST' | 'DEMO'
+  name: 'dev' | 'test' | 'demo'
 } & Select
 
 type ClicSaludUser = {
@@ -36,7 +43,7 @@ type ClicSaludUser = {
     }
     Entorno: {
       type: 'select'
-      select: Entorno | null
+      select: Entorno
       id: string
     }
   }
