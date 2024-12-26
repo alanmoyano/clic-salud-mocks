@@ -52,6 +52,8 @@ export function DataTable<TData, TValue>({
     'Administrador',
   ]
 
+  const anchos = ['w-[15em]', 'w-[15em]', 'w-[25em]', 'w-[25em]']
+
   return (
     <div>
       <div className='flex items-center gap-4 py-4'>
@@ -90,9 +92,9 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
+                {headerGroup.headers.map((header, index) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className={anchos[index]}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

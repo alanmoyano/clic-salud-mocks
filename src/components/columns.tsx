@@ -21,7 +21,7 @@ function parseEnvironment(environment: Environment) {
 }
 
 function handleLogin(environment: Environment, cuil: number) {
-  const baseUrl = `https://rugepresa${parseEnvironment(environment)}.cidsfrcutn.tech/api/rugepresa-api/login-alternativo-mock-cidi/${cuil}`
+  const baseUrl = `https://rugepresa${parseEnvironment(environment)}.cidsfrcutn.tech${environment === 'dev' && '/api'}/rugepresa-api/login-alternativo-mock-cidi/${cuil}`
   window.open(baseUrl, '_blank')
 }
 
@@ -66,7 +66,10 @@ export const columns: ColumnDef<User, User>[] = [
       <Button
         onClick={() => handleLogin(row.original.entorno, row.original.cuil)}
       >
-        <ArrowUpRight /> Iniciar Sesión
+        <span className='flex items-center gap-1'>
+          <ArrowUpRight /> Iniciar Sesión en{' '}
+          <strong>{row.original.entorno}</strong>
+        </span>
       </Button>
     ),
   },

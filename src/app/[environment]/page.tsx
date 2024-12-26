@@ -17,6 +17,12 @@ async function getUsers(environment: Environment) {
         equals: environment.toLowerCase(),
       },
     },
+    sorts: [
+      {
+        property: 'Nombre',
+        direction: 'ascending',
+      },
+    ],
   })
 
   const users: User[] = []
