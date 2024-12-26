@@ -22,7 +22,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { handleLogin } from '@/lib/login'
 import { Environment, PosibleRol } from '@/lib/types'
@@ -34,6 +39,7 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { usePathname } from 'next/navigation'
 import { Suspense, useState } from 'react'
 
@@ -113,7 +119,7 @@ export function DataTable<TData, TValue>({
                 Iniciar Sesión con un CUIL distinto
               </Button>
             </DialogTrigger>
-            <DialogContent className='max-w-md'>
+            <DialogContent className='max-w-xl'>
               <DialogHeader>
                 <DialogTitle>Iniciar Sesión con un CUIL distinto</DialogTitle>
                 <DialogDescription>
@@ -129,15 +135,32 @@ export function DataTable<TData, TValue>({
                   )
                 }}
               >
-                <div className='grid grid-cols-4 items-center gap-4 py-4'>
-                  <Label htmlFor='cuil' className='text-right'>
-                    CUIL
-                  </Label>
-                  <Input
+                <div className='py-4'>
+                  <InputOTP
+                    maxLength={11}
                     id='cuil'
-                    placeholder='Ingresa aquí el CUIL'
-                    className='col-span-3'
-                  />
+                    pattern={REGEXP_ONLY_DIGITS}
+                  >
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                      <InputOTPSlot index={6} />
+                      <InputOTPSlot index={7} />
+                      <InputOTPSlot index={8} />
+                      <InputOTPSlot index={9} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                      <InputOTPSlot index={10} />
+                    </InputOTPGroup>
+                  </InputOTP>
                 </div>
                 <DialogFooter>
                   <LoginButton environment={environment} />
