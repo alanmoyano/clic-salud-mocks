@@ -19,6 +19,21 @@ export const metadata: Metadata = {
   title: 'Mocks ClicSalud',
   description: 'Hecho con amor por Alan',
   creator: 'Alan Moyano',
+  openGraph: {
+    type: 'website',
+    title: 'Mocks ClicSalud',
+    description: 'Hecho con amor por Alan',
+    url: 'https://clic-salud-login.vercel.app',
+    siteName: 'Mocks ClicSalud',
+    images: [
+      {
+        url: 'https://clic-salud-login.vercel.app/api/og',
+        width: 1200,
+        height: 630,
+        alt: 'Mocks ClicSalud',
+      },
+    ],
+  },
 }
 
 export default async function RootLayout({

@@ -1,45 +1,26 @@
-import { isFullPage } from '@notionhq/client'
+'use cache'
 
 import { columns } from '@/components/columns'
 import { DataTable } from '@/components/users-table'
-import { database_id, notion } from '@/lib/env'
-import type { Environment, User } from '@/lib/types'
-import { isClicSaludUser } from '@/lib/types'
+import type { Environment } from '@/lib/types'
+import { getUsers } from '@/lib/users'
+import type { Metadata } from 'next'
 
-async function getUsers(environment: Environment) {
-  'use cache'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ environment: string }>
+}): Promise<Metadata> {
+  const { environment } = await params
 
-  const { results } = await notion.databases.query({
-    database_id,
-    filter: {
-      property: 'Entorno',
-      select: {
-        equals: environment.toLowerCase(),
-      },
+  return {
+    title: `Mocks para ${environment}`,
+    description: `Lista de usuarios de ${environment}`,
+    openGraph: {
+      title: `Mocks para ${environment}`,
+      description: `Lista de usuarios de ${environment}`,
     },
-    sorts: [
-      {
-        property: 'Nombre',
-        direction: 'ascending',
-      },
-    ],
-  })
-
-  const users: User[] = []
-
-  for (const result of results) {
-    if (!isFullPage(result)) continue
-    if (!isClicSaludUser(result)) continue
-
-    users.push({
-      cuil: result.properties.CUIL.number,
-      nombre: result.properties.Nombre.title[0].plain_text,
-      roles: result.properties.Roles.multi_select.map(role => role.name),
-      entorno: result.properties.Entorno.select.name,
-    })
   }
-
-  return users
 }
 
 export default async function Environment({
