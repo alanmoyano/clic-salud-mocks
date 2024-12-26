@@ -1,3 +1,5 @@
+'use cache'
+
 import { isFullPage } from '@notionhq/client'
 
 import { columns } from '@/components/columns'

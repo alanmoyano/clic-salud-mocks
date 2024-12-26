@@ -1,3 +1,5 @@
+'use cache'
+
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -8,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-export default function Loading() {
+export default async function Loading() {
   const arrayOf4 = [...Array(4)]
 
   return (

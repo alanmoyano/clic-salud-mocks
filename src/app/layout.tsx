@@ -1,3 +1,5 @@
+'use cache'
+
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
   creator: 'Alan Moyano',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
