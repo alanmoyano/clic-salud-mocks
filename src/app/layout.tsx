@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     type: 'website',
     title: 'Mocks ClicSalud',
     description: 'Hecho con amor por Alan',
-    url: 'https://clic-salud-login.vercel.app',
+    url: 'https://clic-salud-mocks.vercel.app',
     siteName: 'Mocks ClicSalud',
     images: [
       {
-        url: 'https://clic-salud-login.vercel.app/api/og',
+        url: 'https://clic-salud-mocks.vercel.app/api/og',
         width: 1200,
         height: 630,
         alt: 'Mocks ClicSalud',
