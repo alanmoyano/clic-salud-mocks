@@ -3,6 +3,7 @@
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 
+import { Toaster } from '@/components/ui/sonner'
 import { Analytics } from '@vercel/analytics/next'
 
 import { ThemeProvider } from '@/components/theme-provider'
@@ -46,7 +47,8 @@ export default async function RootLayout({
       <body className={`${geistSans.className} antialiased`}>
         <ThemeProvider defaultTheme='dark' attribute='class' enableSystem>
           <NavBar />
-          {children}
+          <main>{children}</main>
+          <Toaster richColors />
           <Analytics mode='production' />
         </ThemeProvider>
       </body>

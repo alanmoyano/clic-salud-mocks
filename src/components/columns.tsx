@@ -6,6 +6,7 @@ import { handleLogin } from '@/lib/login'
 import { Environment } from '@/lib/types'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ColumnDef } from '@tanstack/react-table'
+import { toast } from 'sonner'
 
 export type User = {
   cuil: number
@@ -18,6 +19,21 @@ export const columns: ColumnDef<User, User>[] = [
   {
     accessorKey: 'cuil',
     header: 'CUIL',
+    cell: ({ row }) => {
+      const cuil = String(row.original.cuil)
+
+      return (
+        <span
+          onClick={() => {
+            navigator.clipboard.writeText(cuil)
+            toast.success('CUIL copiado')
+          }}
+          className='cursor-copy'
+        >
+          {[cuil.slice(0, 2), cuil.slice(2, 10), cuil.slice(10, 11)].join('-')}
+        </span>
+      )
+    },
   },
   {
     id: 'nombre',

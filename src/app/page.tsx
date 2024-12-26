@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default async function Home() {
   return (
-    <div className='mt-4 flex flex-col items-center justify-center'>
+    <section className='mt-4 flex flex-col items-center justify-center'>
       <h1 className='text-2xl font-semibold'>Bienvenido!</h1>
       <p>
         Hice esta página para acelerar el login a los entornos que usamos
@@ -20,6 +20,6 @@ export default async function Home() {
       >
         Empezar
       </Link>
-    </div>
+    </section>
   )
 }
