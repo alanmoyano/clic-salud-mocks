@@ -1,26 +1,17 @@
 'use client'
 
+import { LoginButton } from '@/components/login-button'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { handleLogin } from '@/lib/login'
 import { Environment } from '@/lib/types'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpRight } from 'lucide-react'
 
 export type User = {
   cuil: number
   nombre: string
   roles: string[]
   entorno: Environment
-}
-
-function handleLogin(environment: Environment, cuil: number) {
-  const baseUrl =
-    environment === 'dev'
-      ? 'http://172.16.18.237:8083'
-      : `https://rugepresa${environment === 'test' ? 'tst' : environment}.cidsfrcutn.tech`
-  const apiUrl = `${environment !== 'dev' ? 'api/' : ''}rugepresa-api/login-alternativo-mock-cidi`
-  window.open(`${baseUrl}/${apiUrl}/${cuil}`, '_blank')
 }
 
 export const columns: ColumnDef<User, User>[] = [
@@ -61,14 +52,10 @@ export const columns: ColumnDef<User, User>[] = [
   {
     id: 'login',
     cell: ({ row }) => (
-      <Button
+      <LoginButton
+        environment={row.original.entorno}
         onClick={() => handleLogin(row.original.entorno, row.original.cuil)}
-      >
-        <span className='flex items-center gap-1'>
-          <ArrowUpRight /> Iniciar Sesión en{' '}
-          <strong>{row.original.entorno}</strong>
-        </span>
-      </Button>
+      />
     ),
   },
 ]

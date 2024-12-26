@@ -17,15 +17,7 @@ export default async function Loading() {
   return (
     <div className='m-auto grid max-w-screen-xl py-4'>
       <div className='flex items-center gap-4'>
-        <Skeleton id='loading-input' className='h-10 w-96 max-w-sm' />
-
-        <div className='flex flex-wrap gap-1'>
-          <Skeleton className='h-10 w-[72px]' />
-          <Skeleton className='h-10 w-[72px]' />
-          <Skeleton className='h-10 w-[105px]' />
-          <Skeleton className='h-10 w-[105px]' />
-          <Skeleton className='h-10 w-[118px]' />
-        </div>
+        <Skeleton className='h-10 w-full' />
       </div>
 
       <div className='mt-4'>

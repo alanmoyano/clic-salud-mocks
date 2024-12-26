@@ -1,10 +1,10 @@
-'use cache'
-
+import Loading from '@/app/[environment]/loading'
 import { columns } from '@/components/columns'
 import { DataTable } from '@/components/users-table'
 import type { Environment } from '@/lib/types'
 import { getUsers } from '@/lib/users'
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 export async function generateMetadata({
   params,
@@ -34,7 +34,9 @@ export default async function Environment({
 
   return (
     <section className='m-auto grid max-w-screen-xl'>
-      <DataTable columns={columns} data={users} />
+      <Suspense fallback={<Loading />}>
+        <DataTable columns={columns} data={users} />
+      </Suspense>
     </section>
   )
 }
