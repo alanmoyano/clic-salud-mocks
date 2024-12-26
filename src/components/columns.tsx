@@ -14,15 +14,13 @@ export type User = {
   entorno: Environment
 }
 
-function parseEnvironment(environment: Environment) {
-  const parsedEnvironment = environment.toLowerCase()
-
-  return parsedEnvironment === 'test' ? 'tst' : parsedEnvironment
-}
-
 function handleLogin(environment: Environment, cuil: number) {
-  const baseUrl = `https://rugepresa${parseEnvironment(environment)}.cidsfrcutn.tech${environment === 'dev' && '/api'}/rugepresa-api/login-alternativo-mock-cidi/${cuil}`
-  window.open(baseUrl, '_blank')
+  const baseUrl =
+    environment === 'dev'
+      ? 'http://172.16.18.237:8083'
+      : `https://rugepresa${environment === 'test' ? 'tst' : environment}.cidsfrcutn.tech`
+  const apiUrl = `${environment !== 'dev' ? 'api/' : ''}rugepresa-api/login-alternativo-mock-cidi`
+  window.open(`${baseUrl}/${apiUrl}/${cuil}`, '_blank')
 }
 
 export const columns: ColumnDef<User, User>[] = [
