@@ -1,5 +1,3 @@
-'use cache'
-
 import { isFullPage } from '@notionhq/client'
 
 import { columns } from '@/components/columns'
@@ -9,6 +7,8 @@ import type { Environment, User } from '@/lib/types'
 import { isClicSaludUser } from '@/lib/types'
 
 async function getUsers(environment: Environment) {
+  'use cache'
+
   const { results } = await notion.databases.query({
     database_id,
     filter: {
