@@ -1,9 +1,9 @@
 import { isFullPage } from '@notionhq/client'
 
-import type { Environment } from '@/app/page'
-import { columns, type User } from '@/components/columns'
+import { columns } from '@/components/columns'
 import { DataTable } from '@/components/users-table'
 import { database_id, notion } from '@/lib/env'
+import type { Environment, User } from '@/lib/types'
 import { isClicSaludUser } from '@/lib/types'
 
 async function getUsers(environment: Environment) {

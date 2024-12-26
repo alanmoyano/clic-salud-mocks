@@ -20,8 +20,10 @@ type Rol = {
   name: PosibleRol
 } & Select
 
+export type Environment = 'demo' | 'test' | 'dev'
+
 type Entorno = {
-  name: 'dev' | 'test' | 'demo'
+  name: Environment
 } & Select
 
 type ClicSaludUser = {
@@ -48,6 +50,13 @@ type ClicSaludUser = {
     }
   }
 } & PageObjectResponse
+
+export type User = {
+  cuil: number
+  nombre: string
+  roles: string[]
+  entorno: Environment
+}
 
 export function isClicSaludUser(
   user: PageObjectResponse

@@ -1,4 +1,3 @@
-import { Environment } from '@/app/page'
 import {
   Select,
   SelectContent,
@@ -6,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Environment } from '@/lib/types'
 
 export function EnvironmentSelect({
   setEnvironment,

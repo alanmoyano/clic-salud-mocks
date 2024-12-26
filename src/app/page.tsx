@@ -1,12 +1,4 @@
-// import { EnvironmentSelect } from '@/components/environment-select'
-// import { UsersTable } from '@/components/users-table'
-// import { isClicSaludUser } from '@/lib/types'
-// import { isFullPage } from '@notionhq/client'
-// import { useEffect, useState } from 'react'
-
 import Link from 'next/link'
-
-export type Environment = 'demo' | 'test' | 'dev'
 
 export default async function Home() {
   return (

@@ -1,8 +1,8 @@
 'use client'
 
-import { Environment } from '@/app/page'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Environment } from '@/lib/types'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpRight } from 'lucide-react'
