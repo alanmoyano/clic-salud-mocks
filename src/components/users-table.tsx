@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/input-otp'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { handleLogin } from '@/lib/login'
-import { Environment, PosibleRol } from '@/lib/types'
+import { Environment, PossibleRol } from '@/lib/types'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -52,8 +52,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const pathname = usePathname()
-  const environment = pathname.slice(1) as Environment
+  const environment = usePathname().slice(1) as Environment
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
@@ -68,7 +67,7 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  const roles: PosibleRol[] = [
+  const roles: PossibleRol[] = [
     'Efector',
     'Auditor',
     'Arquitectura',
@@ -76,7 +75,7 @@ export function DataTable<TData, TValue>({
     'Administrador',
   ]
 
-  const anchos = ['w-[15em]', 'w-[15em]', 'w-[25em]', 'w-[25em]']
+  const widths = ['w-[15em]', 'w-[15em]', 'w-[25em]', 'w-[25em]']
 
   return (
     <Suspense fallback={<Loading />}>
@@ -176,7 +175,7 @@ export function DataTable<TData, TValue>({
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header, index) => {
                     return (
-                      <TableHead key={header.id} className={anchos[index]}>
+                      <TableHead key={header.id} className={widths[index]}>
                         {header.isPlaceholder
                           ? null
                           : flexRender(

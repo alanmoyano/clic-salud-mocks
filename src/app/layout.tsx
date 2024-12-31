@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   title: 'Mocks ClicSalud',
   description: 'Hecho con amor por Alan',
   creator: 'Alan Moyano',
+  metadataBase: new URL('https://clic-salud-mocks.vercel.app'),
   openGraph: {
     type: 'website',
     title: 'Mocks ClicSalud',
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'Mocks ClicSalud',
     images: [
       {
-        url: 'https://clic-salud-mocks.vercel.app/api/og',
+        url: '/og.webp',
         width: 1200,
         height: 630,
         alt: 'Mocks ClicSalud',

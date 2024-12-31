@@ -9,7 +9,7 @@ type Select = {
   color: string
 }
 
-export type PosibleRol =
+export type PossibleRol =
   | 'Efector'
   | 'Auditor'
   | 'Arquitectura'
@@ -17,7 +17,7 @@ export type PosibleRol =
   | 'Administrador'
 
 type Rol = {
-  name: PosibleRol
+  name: PossibleRol
 } & Select
 
 export type Environment = 'demo' | 'test' | 'dev'
