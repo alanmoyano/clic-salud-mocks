@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <Suspense fallback={<Loading />}>
-      <div>
+      <div className='p-2'>
         <div className='flex items-center gap-4 py-4'>
           <Input
             placeholder='Filtrar por nombre'

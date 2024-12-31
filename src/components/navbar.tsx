@@ -10,7 +10,7 @@ export function NavBar() {
   return (
     <div className='flex items-center justify-between px-4 py-2 shadow-lg'>
       <nav className='flex gap-4'>
-        <Link href='/' className='text-3xl font-bold'>
+        <Link href='/' className='text-xl font-bold lg:text-2xl'>
           Mocks ClicSalud
         </Link>
         <div className='flex items-center justify-center gap-4'>
