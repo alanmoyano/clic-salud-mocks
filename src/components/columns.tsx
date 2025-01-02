@@ -68,10 +68,21 @@ export const columns: ColumnDef<User, User>[] = [
   {
     id: 'login',
     cell: ({ row }) => (
-      <LoginButton
-        environment={row.original.entorno}
-        onClick={() => handleLogin(row.original.entorno, row.original.cuil)}
-      />
+      <div className='flex gap-2'>
+        <LoginButton
+          environment={row.original.entorno}
+          onClick={() =>
+            handleLogin(row.original.entorno, false, row.original.cuil)
+          }
+        />
+        <LoginButton
+          environment={row.original.entorno}
+          local
+          onClick={() =>
+            handleLogin(row.original.entorno, true, row.original.cuil)
+          }
+        />
+      </div>
     ),
   },
 ]

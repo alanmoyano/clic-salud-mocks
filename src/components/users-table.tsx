@@ -41,7 +41,7 @@ import {
 } from '@tanstack/react-table'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { usePathname } from 'next/navigation'
-import { Suspense, useState } from 'react'
+import { Suspense, useRef, useState } from 'react'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -55,6 +55,7 @@ export function DataTable<TData, TValue>({
   const environment = usePathname().slice(1) as Environment
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const cuil = useRef(0)
 
   const table = useReactTable({
     data,
@@ -75,7 +76,7 @@ export function DataTable<TData, TValue>({
     'Administrador',
   ]
 
-  const widths = ['w-[15em]', 'w-[15em]', 'w-[25em]', 'w-[25em]']
+  const widths = ['w-[10%]', 'w-[15%]', 'w-[20%]', 'w-[35%]']
 
   return (
     <Suspense fallback={<Loading />}>
@@ -125,51 +126,50 @@ export function DataTable<TData, TValue>({
                   Ingresa el CUIL que quieres utilizar para iniciar sesión.
                 </DialogDescription>
               </DialogHeader>
-              <form
-                onSubmit={event => {
-                  event.preventDefault()
-                  handleLogin(
-                    environment,
-                    Number(event.currentTarget.cuil.value)
-                  )
-                }}
-              >
-                <div className='py-4'>
-                  <InputOTP
-                    maxLength={11}
-                    id='cuil'
-                    pattern={REGEXP_ONLY_DIGITS}
-                  >
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                    </InputOTPGroup>
-                    <InputOTPSeparator />
-                    <InputOTPGroup>
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                      <InputOTPSlot index={6} />
-                      <InputOTPSlot index={7} />
-                      <InputOTPSlot index={8} />
-                      <InputOTPSlot index={9} />
-                    </InputOTPGroup>
-                    <InputOTPSeparator />
-                    <InputOTPGroup>
-                      <InputOTPSlot index={10} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </div>
-                <DialogFooter>
-                  <LoginButton environment={environment} />
-                </DialogFooter>
-              </form>
+              <div className='py-4'>
+                <InputOTP
+                  maxLength={11}
+                  id='cuil'
+                  pattern={REGEXP_ONLY_DIGITS}
+                  onChange={event => (cuil.current = Number(event))}
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                    <InputOTPSlot index={6} />
+                    <InputOTPSlot index={7} />
+                    <InputOTPSlot index={8} />
+                    <InputOTPSlot index={9} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={10} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
+              <DialogFooter>
+                <LoginButton
+                  environment={environment}
+                  onClick={() => handleLogin(environment, false, cuil.current)}
+                />
+                <LoginButton
+                  local
+                  environment={environment}
+                  onClick={() => handleLogin(environment, true, cuil.current)}
+                />
+              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
         <div className='rounded-md border'>
-          <Table className='w-full table-fixed'>
+          <Table className='table-fixed'>
             <TableHeader>
               {table.getHeaderGroups().map(headerGroup => (
                 <TableRow key={headerGroup.id}>

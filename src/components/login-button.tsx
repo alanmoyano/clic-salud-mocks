@@ -1,17 +1,25 @@
-import { Button } from '@/components/ui/button'
+import { Button, ButtonProps } from '@/components/ui/button'
 import { Environment } from '@/lib/types'
 import { ArrowUpRight } from 'lucide-react'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface LoginButtonProps extends ButtonProps {
   environment: Environment
+  local?: boolean
 }
 
-export function LoginButton({ environment, ...props }: ButtonProps) {
+export function LoginButton({
+  environment,
+  local,
+  ...props
+}: LoginButtonProps) {
   return (
     <Button {...props}>
       <span className='flex items-center gap-1'>
         <ArrowUpRight />
-        Iniciar Sesión en <strong>{environment}</strong>
+        Iniciar sesión en{' '}
+        <strong>
+          {environment} {local ? 'local' : 'desplegado'}
+        </strong>
       </span>
     </Button>
   )

@@ -50,7 +50,7 @@ export default async function RootLayout({
           <NavBar />
           <main>{children}</main>
           <Toaster richColors />
-          <Analytics mode='production' />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
