@@ -69,36 +69,19 @@ export const columns: ColumnDef<User, User>[] = [
     id: 'login',
     cell: ({ row }) => (
       <div className='flex justify-center gap-2'>
-        {row.original.entorno === 'demo' ? (
-          <LoginButton
-            environment='demo'
-            onClick={() =>
-              window.open(
-                `https://rugepresademo.cidsfrcutn.tech/api/rugepresa-api/login-alternativo-mock-cidi/${row.original.cuil}`
-              )
-            }
-          >
-            <span>
-              Iniciar sesión en <strong>demo</strong>
-            </span>
-          </LoginButton>
-        ) : (
-          <>
-            <LoginButton
-              environment={row.original.entorno}
-              onClick={() =>
-                handleLogin(row.original.entorno, false, row.original.cuil)
-              }
-            />
-            <LoginButton
-              environment={row.original.entorno}
-              local
-              onClick={() =>
-                handleLogin(row.original.entorno, true, row.original.cuil)
-              }
-            />
-          </>
-        )}
+        <LoginButton
+          environment={row.original.entorno}
+          onClick={() =>
+            handleLogin(row.original.entorno, false, row.original.cuil)
+          }
+        />
+        <LoginButton
+          environment={row.original.entorno}
+          local
+          onClick={() =>
+            handleLogin(row.original.entorno, true, row.original.cuil)
+          }
+        />
       </div>
     ),
   },
