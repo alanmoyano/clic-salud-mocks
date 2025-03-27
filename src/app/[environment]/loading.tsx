@@ -1,5 +1,3 @@
-'use cache'
-
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,

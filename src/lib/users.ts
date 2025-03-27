@@ -1,5 +1,3 @@
-'use cache'
-
 import { notion, database_id } from '@/lib/env'
 import { Environment, isClicSaludUser, User } from '@/lib/types'
 import { isFullPage } from '@notionhq/client'
