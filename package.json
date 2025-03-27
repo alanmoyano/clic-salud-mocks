@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
+    "build:turbo": "next build --turbo",
     "start": "next start",
+    "start:turbo": "next start --turbo",
     "lint": "next lint",
     "format": "prettier --write ./src"
   },
