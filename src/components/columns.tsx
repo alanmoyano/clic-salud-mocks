@@ -74,6 +74,11 @@ export const columns: ColumnDef<User, User>[] = [
           onClick={() =>
             handleLogin(row.original.entorno, false, row.original.cuil)
           }
+          onMouseDown={e => {
+            e.preventDefault()
+            if (e.button === 1)
+              handleLogin(row.original.entorno, false, row.original.cuil)
+          }}
         />
         <LoginButton
           environment={row.original.entorno}
@@ -81,6 +86,11 @@ export const columns: ColumnDef<User, User>[] = [
           onClick={() =>
             handleLogin(row.original.entorno, true, row.original.cuil)
           }
+          onMouseDown={e => {
+            e.preventDefault()
+            if (e.button === 1)
+              handleLogin(row.original.entorno, true, row.original.cuil)
+          }}
         />
       </div>
     ),

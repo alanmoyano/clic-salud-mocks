@@ -158,11 +158,21 @@ export function DataTable<TData, TValue>({
                 <LoginButton
                   environment={environment}
                   onClick={() => handleLogin(environment, false, cuil.current)}
+                  onMouseDown={e => {
+                    e.preventDefault()
+                    if (e.button === 1)
+                      handleLogin(environment, false, cuil.current)
+                  }}
                 />
                 <LoginButton
                   local
                   environment={environment}
                   onClick={() => handleLogin(environment, true, cuil.current)}
+                  onMouseDown={e => {
+                    e.preventDefault()
+                    if (e.button === 1)
+                      handleLogin(environment, true, cuil.current)
+                  }}
                 />
               </DialogFooter>
             </DialogContent>
