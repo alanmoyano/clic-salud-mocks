@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Toaster } from '@/components/ui/sonner'
 import { Analytics } from '@vercel/analytics/next'
@@ -12,6 +12,11 @@ import './globals.css'
 
 const geistSans = Geist({
   subsets: ['latin'],
+})
+
+const geistMonoSans = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
 })
 
 export const metadata: Metadata = {
@@ -43,7 +48,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang='es' suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body
+        className={`${geistSans.className} ${geistMonoSans.variable} antialiased`}
+      >
         <ThemeProvider defaultTheme='dark' attribute='class' enableSystem>
           <NavBar />
           <main>{children}</main>
