@@ -2,7 +2,7 @@
 
 import { LoginButton } from '@/components/login-button'
 import { Badge } from '@/components/ui/badge'
-import { handleLogin } from '@/lib/login'
+import { getLoginUrl } from '@/lib/login'
 import { Environment } from '@/lib/types'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { ColumnDef } from '@tanstack/react-table'
@@ -71,26 +71,12 @@ export const columns: ColumnDef<User, User>[] = [
       <div className='flex justify-center gap-2'>
         <LoginButton
           environment={row.original.entorno}
-          onClick={() =>
-            handleLogin(row.original.entorno, false, row.original.cuil)
-          }
-          onMouseDown={e => {
-            e.preventDefault()
-            if (e.button === 1)
-              handleLogin(row.original.entorno, false, row.original.cuil)
-          }}
+          href={getLoginUrl(row.original.entorno, false, row.original.cuil)}
         />
         <LoginButton
-          environment={row.original.entorno}
           local
-          onClick={() =>
-            handleLogin(row.original.entorno, true, row.original.cuil)
-          }
-          onMouseDown={e => {
-            e.preventDefault()
-            if (e.button === 1)
-              handleLogin(row.original.entorno, true, row.original.cuil)
-          }}
+          environment={row.original.entorno}
+          href={getLoginUrl(row.original.entorno, true, row.original.cuil)}
         />
       </div>
     ),

@@ -29,7 +29,7 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { handleLogin } from '@/lib/login'
+import { getLoginUrl } from '@/lib/login'
 import { Environment, PossibleRol } from '@/lib/types'
 import {
   ColumnDef,
@@ -157,22 +157,12 @@ export function DataTable<TData, TValue>({
               <DialogFooter>
                 <LoginButton
                   environment={environment}
-                  onClick={() => handleLogin(environment, false, cuil.current)}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                    if (e.button === 1)
-                      handleLogin(environment, false, cuil.current)
-                  }}
+                  href={getLoginUrl(environment, false, cuil.current)}
                 />
                 <LoginButton
                   local
                   environment={environment}
-                  onClick={() => handleLogin(environment, true, cuil.current)}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                    if (e.button === 1)
-                      handleLogin(environment, true, cuil.current)
-                  }}
+                  href={getLoginUrl(environment, true, cuil.current)}
                 />
               </DialogFooter>
             </DialogContent>

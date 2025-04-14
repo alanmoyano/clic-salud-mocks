@@ -1,34 +1,36 @@
 import { Button, ButtonProps } from '@/components/ui/button'
 import { Environment } from '@/lib/types'
 import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface LoginButtonProps extends ButtonProps {
   environment: Environment
   local?: boolean
-  children?: React.ReactNode
+  href: string
 }
 
 export function LoginButton({
   environment,
   local,
-  children,
+  href,
   ...props
 }: LoginButtonProps) {
   return (
-    <Button {...props}>
-      <span className='flex items-center gap-1'>
+    <Button {...props} asChild>
+      <Link
+        href={href}
+        target='_blank'
+        rel='noreferrer'
+        className='flex items-center gap-1'
+      >
         <ArrowUpRight />
-        {children ? (
-          children
-        ) : (
-          <>
-            Iniciar sesión en{' '}
-            <strong>
-              {environment} {local ? 'local' : 'desplegado'}
-            </strong>
-          </>
-        )}
-      </span>
+        <p>
+          Iniciar sesión en{' '}
+          <strong>
+            {environment} {local ? 'local' : 'desplegado'}
+          </strong>
+        </p>
+      </Link>
     </Button>
   )
 }
