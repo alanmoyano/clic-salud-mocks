@@ -41,7 +41,7 @@ import {
 } from '@tanstack/react-table'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { usePathname } from 'next/navigation'
-import { Suspense, useRef, useState } from 'react'
+import { Suspense, useState } from 'react'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
   const environment = usePathname().slice(1) as Environment
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const cuil = useRef(0)
+  const [cuil, setCuil] = useState(0)
 
   const table = useReactTable({
     data,
@@ -131,7 +131,9 @@ export function DataTable<TData, TValue>({
                   maxLength={11}
                   id='cuil'
                   pattern={REGEXP_ONLY_DIGITS}
-                  onChange={event => (cuil.current = Number(event))}
+                  onChange={event => {
+                    setCuil(Number(event))
+                  }}
                 >
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
@@ -157,12 +159,12 @@ export function DataTable<TData, TValue>({
               <DialogFooter>
                 <LoginButton
                   environment={environment}
-                  href={getLoginUrl(environment, false, cuil.current)}
+                  href={getLoginUrl(environment, false, cuil)}
                 />
                 <LoginButton
                   local
                   environment={environment}
-                  href={getLoginUrl(environment, true, cuil.current)}
+                  href={getLoginUrl(environment, true, cuil)}
                 />
               </DialogFooter>
             </DialogContent>
