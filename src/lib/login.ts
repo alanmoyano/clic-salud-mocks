@@ -27,5 +27,5 @@ export function getLoginUrl(
 
   const apiUrl = `${environment !== 'dev' ? 'api/' : ''}rugepresa-api/login-alternativo-mock-cidi/${local ? 'local' : 'desplegado'}`
 
-  return `${baseUrl}/${apiUrl}/${cuil}`
+  return `${baseUrl}/${apiUrl}/${cuil}${environment !== 'demo' ? '/cookie' : '' }`
 }
