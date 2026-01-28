@@ -49,7 +49,7 @@ import {
 } from "@/types/users";
 import { useQuery } from "convex/react";
 import { GlobeIcon, MonitorDownIcon } from "lucide-react";
-import { parseAsStringLiteral, useQueryState } from "nuqs";
+import { parseAsBoolean, parseAsStringLiteral, useQueryState } from "nuqs";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
 
@@ -84,13 +84,17 @@ export function Mocks() {
     parseAsStringLiteral(listaEntornos),
   );
   const [rol, setRol] = useQueryState("rol", parseAsStringLiteral(listaRoles));
-
-  const usuariosRolEntorno = useQuery(api.tasks.getUsuariosRolEntorno);
+  const [filtro, setFiltro] = useQueryState("filtro", {
+    defaultValue: "",
+  });
+  const [backendLocal, setBackendLocal] = useQueryState(
+    "backendLocal",
+    parseAsBoolean.withDefault(false),
+  );
 
   const [cuil, setCuil] = useState("");
-  const [globalFilter, setGlobalFilter] = useState("");
 
-  const [backendLocal, setBackendLocal] = useState(false);
+  const usuariosRolEntorno = useQuery(api.tasks.getUsuariosRolEntorno);
 
   return (
     <>
@@ -145,7 +149,8 @@ export function Mocks() {
               <Input
                 type="text"
                 placeholder="Buscar por nombre o CUIL"
-                onChange={(event) => setGlobalFilter(event.target.value)}
+                value={filtro}
+                onChange={(event) => setFiltro(event.target.value)}
                 className="min-w-xs"
               />
             </Field>
@@ -289,7 +294,10 @@ export function Mocks() {
                 <Checkbox
                   id="backend-local"
                   checked={backendLocal}
-                  onCheckedChange={setBackendLocal}
+                  onCheckedChange={(checked) => {
+                    localStorage.setItem("backendLocal", checked.toString());
+                    setBackendLocal(checked);
+                  }}
                   className=""
                 />
                 <FieldLabel htmlFor="backend-local">
@@ -314,8 +322,8 @@ export function Mocks() {
               ? columns
               : columns.filter((column) => column.header !== "Entorno")
           }
-          globalFilter={globalFilter}
-          setGlobalFilter={setGlobalFilter}
+          globalFilter={filtro}
+          setGlobalFilter={setFiltro}
           backendLocal={backendLocal}
         />
       )}

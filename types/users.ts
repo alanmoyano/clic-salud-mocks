@@ -18,7 +18,7 @@ export function isRol(value: unknown): value is Rol {
   return rolesEnum.safeParse(value).success;
 }
 
-export const listaEntornos = ["demo", "test", "dev", "staging"] as const;
+export const listaEntornos = ["dev", "test", "demo", "staging"] as const;
 
 export const entornosEnum = z.enum(listaEntornos);
 

@@ -32,7 +32,9 @@ export const getUsuariosRolEntorno = query({
       }),
     );
 
-    return usuariosEntornoMapeados;
+    return usuariosEntornoMapeados.sort((a, b) =>
+      a.roles.includes("Efector") ? -1 : 1,
+    );
   },
 });
 
