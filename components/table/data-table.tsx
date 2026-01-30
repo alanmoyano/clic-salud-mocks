@@ -72,7 +72,7 @@ export function UserTable({
     columns,
     globalFilterFn: fuzzyFilter,
     state: {
-      globalFilter,
+      globalFilter: globalFilter.replaceAll("-", "").trim(),
     },
     meta: {
       backendLocal,
