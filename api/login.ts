@@ -18,17 +18,19 @@ const API_URLS: Record<EntornoALoguear, string> = {
   staging: "api/rugepresa-api/login-alternativo-mock-cidi",
 };
 
+export interface LoginParams {
+  entorno: Entorno;
+  cuil: string;
+  frontendLocal: boolean;
+  backendLocal?: boolean;
+}
+
 export function getLoginUrl({
   entorno,
   frontendLocal,
   cuil,
   backendLocal = false,
-}: {
-  entorno: Entorno;
-  cuil: string;
-  frontendLocal: boolean;
-  backendLocal?: boolean;
-}) {
+}: LoginParams) {
   const baseUrl = BASE_URLS[backendLocal ? "local" : entorno];
 
   const apiUrl = API_URLS[backendLocal ? "local" : entorno];

@@ -3,9 +3,13 @@
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 
 import { cn } from "@/lib/utils";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, MinusIcon } from "lucide-react";
 
-function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
+interface CheckboxProps extends CheckboxPrimitive.Root.Props {
+  semiChecked?: boolean;
+}
+
+function Checkbox({ className, semiChecked, ...props }: CheckboxProps) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
@@ -14,12 +18,13 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
         className,
       )}
       {...props}
+      checked={semiChecked || props.checked}
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
         className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
       >
-        <CheckIcon />
+        {semiChecked ? <MinusIcon /> : <CheckIcon />}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

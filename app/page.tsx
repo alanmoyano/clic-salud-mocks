@@ -1,10 +1,10 @@
 "use client";
 
-import { getLoginUrl } from "@/api/login";
+import { LoginButton } from "@/components/login-button";
 import { PageSkeleton } from "@/components/page-skeleton";
 import { columns } from "@/components/table/columns";
-import { UserTable } from "@/components/table/data-table";
 import { TableSkeleton } from "@/components/table/table-skeleton";
+import { UsersTable } from "@/components/table/users-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -48,7 +48,6 @@ import {
   type User,
 } from "@/types/users";
 import { useQuery } from "convex/react";
-import { GlobeIcon, MonitorDownIcon } from "lucide-react";
 import { parseAsBoolean, parseAsStringLiteral, useQueryState } from "nuqs";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
@@ -78,7 +77,7 @@ export default function MainPage() {
   );
 }
 
-export function Mocks() {
+function Mocks() {
   const [entorno, setEntorno] = useQueryState(
     "entorno",
     parseAsStringLiteral(listaEntornos),
@@ -109,13 +108,20 @@ export function Mocks() {
                 onValueChange={(newValue) => setEntorno(newValue)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Seleccionar entorno" />
+                  <SelectValue
+                    placeholder="Seleccionar entorno"
+                    className="capitalize"
+                  />
                 </SelectTrigger>
                 <SelectContent alignItemWithTrigger={false}>
                   <SelectGroup>
                     <SelectItem value={null}>Todos</SelectItem>
                     {listaEntornos.map((entornoItem) => (
-                      <SelectItem key={entornoItem} value={entornoItem}>
+                      <SelectItem
+                        key={entornoItem}
+                        value={entornoItem}
+                        className="capitalize"
+                      >
                         {entornoItem}
                       </SelectItem>
                     ))}
@@ -151,7 +157,6 @@ export function Mocks() {
                 placeholder="Buscar por nombre o CUIL"
                 value={filtro}
                 onChange={(event) => setFiltro(event.target.value)}
-                className="min-w-xs"
               />
             </Field>
           </div>
@@ -235,46 +240,17 @@ export function Mocks() {
                   <DialogFooter>
                     {entorno ? (
                       <>
-                        <Button
-                          variant="outline"
-                          nativeButton={false}
-                          disabled={!entorno || !cuil}
-                          render={
-                            <a
-                              href={getLoginUrl({
-                                entorno,
-                                cuil,
-                                frontendLocal: false,
-                                backendLocal,
-                              })}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <GlobeIcon />
-                              Iniciar sesión en{" "}
-                              <strong>{entorno} desplegado</strong>
-                            </a>
-                          }
+                        <LoginButton
+                          entorno={entorno}
+                          cuil={cuil}
+                          frontendLocal={false}
+                          backendLocal={backendLocal}
                         />
-                        <Button
-                          variant="outline"
-                          nativeButton={false}
-                          disabled={!entorno || !cuil}
-                          render={
-                            <a
-                              href={getLoginUrl({
-                                entorno,
-                                cuil,
-                                frontendLocal: true,
-                                backendLocal,
-                              })}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <MonitorDownIcon />
-                              Iniciar sesión en <strong>{entorno} local</strong>
-                            </a>
-                          }
+                        <LoginButton
+                          entorno={entorno}
+                          cuil={cuil}
+                          frontendLocal={true}
+                          backendLocal={backendLocal}
                         />
                       </>
                     ) : (
@@ -298,7 +274,6 @@ export function Mocks() {
                     localStorage.setItem("backendLocal", checked.toString());
                     setBackendLocal(checked);
                   }}
-                  className=""
                 />
                 <FieldLabel htmlFor="backend-local">
                   Usar backend local
@@ -315,16 +290,13 @@ export function Mocks() {
           La respuesta de la API no respetó el formato esperado.
         </div>
       ) : (
-        <UserTable
+        <UsersTable
           data={getFilteredData(usuariosRolEntorno ?? [], entorno, rol)}
           columns={
             !entorno
               ? columns
-              : columns.filter((column) => column.header !== "Entorno")
+              : columns.filter((column) => column.id !== "entorno")
           }
-          globalFilter={filtro}
-          setGlobalFilter={setFiltro}
-          backendLocal={backendLocal}
         />
       )}
     </>

@@ -5,27 +5,42 @@ export default defineSchema({
   entornos: defineTable({
     id: v.float64(),
     nombre: v.string(),
-  }),
+  }).index("by_id_nombre", ["id", "nombre"]),
   roles: defineTable({
     id: v.float64(),
     nombre: v.string(),
-  }),
+  }).index("by_id_nombre", ["id", "nombre"]),
   usuarios: defineTable({
     cuil: v.string(),
+    nombre: v.string(),
+    idEquipo: v.id("equipos"),
+  })
+    .index("by_nombre", ["nombre"])
+    .index("by_id_equipo", ["idEquipo"])
+    .index("by_cuil", ["cuil"]),
+  equipos: defineTable({
     id: v.float64(),
     nombre: v.string(),
-  }),
-  usuarioRolEntorno: defineTable({
-    usuarioId: v.id("usuarios"),
-    rolId: v.id("roles"),
-    entornoId: v.id("entornos"),
+    prioridad: v.optional(v.float64()),
   })
-    .index("by_usuario", ["usuarioId"])
-    .index("by_usuario_entorno", ["usuarioId", "entornoId"])
-    .index("by_usuario_rol_entorno", ["usuarioId", "rolId", "entornoId"]),
+    .index("by_nombre", ["nombre"])
+    .index("by_id_nombre", ["id", "nombre"])
+    .index("by_prioridad", ["prioridad"]),
+  usuarioRolEntorno: defineTable({
+    idUsuario: v.id("usuarios"),
+    idRol: v.id("roles"),
+    idEntorno: v.id("entornos"),
+  })
+    .index("by_usuario", ["idUsuario"])
+    .index("by_usuario_entorno", ["idUsuario", "idEntorno"]),
   usuarioXEntorno: defineTable({
-    usuarioId: v.id("usuarios"),
-    entornoId: v.id("entornos"),
-    enUso: v.optional(v.boolean()),
-  }).index("by_usuario", ["usuarioId"]),
+    idUsuario: v.id("usuarios"),
+    idEntorno: v.id("entornos"),
+    enUso: v.boolean(),
+    cantidadUsos: v.optional(v.float64()),
+  })
+    .index("by_usuario", ["idUsuario"])
+    .index("by_entorno", ["idEntorno"])
+    .index("by_usuario_entorno", ["idUsuario", "idEntorno"])
+    .index("by_cantidad_usos", ["cantidadUsos"]),
 });

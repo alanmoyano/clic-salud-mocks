@@ -3,19 +3,19 @@ import type { QueryCtx } from "@/convex/_generated/server";
 
 export async function getRolesDeUsuario(
   ctx: QueryCtx,
-  usuarioId: Id<"usuarios">,
-  entornoId: Id<"entornos">,
+  idUsuario: Id<"usuarios">,
+  idEntorno: Id<"entornos">,
 ) {
   const rolesUsuario = await ctx.db
     .query("usuarioRolEntorno")
     .withIndex("by_usuario_entorno", (q) =>
-      q.eq("usuarioId", usuarioId).eq("entornoId", entornoId),
+      q.eq("idUsuario", idUsuario).eq("idEntorno", idEntorno),
     )
     .order("asc")
     .collect();
 
   return await Promise.all(
-    rolesUsuario.map(async (rol) => await getNombreRol(ctx, rol.rolId)),
+    rolesUsuario.map(async (rol) => await getNombreRol(ctx, rol.idRol)),
   );
 }
 
