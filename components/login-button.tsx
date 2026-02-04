@@ -16,11 +16,10 @@ export function LoginButton({
       variant="outline"
       nativeButton={false}
       disabled={!entorno || !cuil}
-      onClick={(e) => {
+      onClick={() => {
         actualizarCantidadUsos({
           cuil,
         });
-        e.preventDefault();
       }}
       render={
         <a
